@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://colombiatravelhub.com/sitemap-index.xml

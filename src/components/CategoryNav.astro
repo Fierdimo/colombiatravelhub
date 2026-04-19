@@ -1,0 +1,39 @@
+---
+import type { CategorySlug, DestinationSlug, Locale } from '../core/domain/models';
+import { useTranslations, getLocalizedPath } from '../i18n';
+import { CATEGORIES } from '../data/categories';
+
+interface Props {
+  locale: Locale;
+  destination: DestinationSlug;
+  activeCategory?: CategorySlug;
+}
+
+const { locale, destination, activeCategory } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<nav
+  aria-label="Category navigation"
+  class="flex gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap"
+>
+  {CATEGORIES.map((cat) => {
+    const isActive = cat.slug === activeCategory;
+    const href = getLocalizedPath(`/${destination}/${cat.slug}`, locale);
+    return (
+      <a
+        href={href}
+        aria-current={isActive ? 'page' : undefined}
+        class={[
+          'shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150',
+          isActive
+            ? 'bg-primary text-white shadow-sm'
+            : 'bg-surface text-muted border border-ink/10 hover:border-primary hover:text-primary',
+        ].join(' ')}
+      >
+        <span aria-hidden="true">{cat.icon}</span>
+        {t(`category.${cat.slug}`)}
+      </a>
+    );
+  })}
+</nav>

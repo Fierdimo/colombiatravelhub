@@ -1,0 +1,46 @@
+---
+import { getEntry, render } from 'astro:content';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import { contentService, affiliateService, seoService } from '../../../lib/services';
+import type { CategorySlug, DestinationSlug } from '../../../core/domain/models';
+import { ACTIVE_DESTINATIONS } from '../../../data/destinations';
+
+export async function getStaticPaths() {
+  const articles = await contentService.getAllArticles('es');
+  return articles
+    .filter((a) => ACTIVE_DESTINATIONS.some((d) => d.slug === a.destination))
+    .map((article) => ({
+      params: {
+        destino: article.destination,
+        categoria: article.category,
+        slug: article.slug,
+      },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+const locale = 'es';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonicalPath = `/${article.destination}/${article.category}/${article.slug}`;
+
+const affiliateLinks = await affiliateService.getLinksForIds(article.affiliateIds);
+
+const alternates = contentService.buildArticleAlternates(
+  article,
+  siteUrl,
+);
+
+const entry = await getEntry('articles', `${locale}/${article.destination}/${article.category}/${article.slug}`);
+const { Content } = entry ? await render(entry) : { Content: undefined };
+---
+
+<ArticleLayout
+  article={article}
+  locale={locale}
+  canonical={`${siteUrl}${canonicalPath}`}
+  alternates={alternates}
+  affiliateLinks={affiliateLinks}
+>
+  {Content ? <Content /> : null}
+</ArticleLayout>

@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #0EA5E9;
+  --color-secondary: #F97316;
+  --color-accent: #10B981;
+  --color-sand: #FDF6EC;
+  --color-surface: #FFFFFF;
+  --color-ink: #1E293B;
+  --color-muted: #64748B;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+
+  /* Shadows with warm tint */
+  --shadow-card: 0 4px 16px rgba(249, 115, 22, 0.08);
+  --shadow-card-hover: 0 12px 32px rgba(14, 165, 233, 0.15);
+}
+
+/* Base */
+html {
+  font-family: var(--font-body);
+  background-color: #FDF6EC;
+  color: #1E293B;
+  scroll-behavior: smooth;
+}
+
+/* Focus visible global reset */
+:focus-visible {
+  outline: 2px solid #0EA5E9;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Visually hidden (screen-reader only) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Prose article body */
+.prose {
+  max-width: 65ch;
+  line-height: 1.75rem;
+  color: #1E293B;
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

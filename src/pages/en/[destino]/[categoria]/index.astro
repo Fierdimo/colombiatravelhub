@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../../components/ArticleCard.astro';
+import CategoryNav from '../../../../components/CategoryNav.astro';
+import { useTranslations } from '../../../../i18n';
+import { contentService, seoService } from '../../../../lib/services';
+import type { CategorySlug, DestinationSlug } from '../../../../core/domain/models';
+import { ACTIVE_DESTINATIONS } from '../../../../data/destinations';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const destination of ACTIVE_DESTINATIONS) {
+    const articles = await contentService.getAllArticles('en');
+    const categoriesWithContent = [
+      ...new Set(
+        articles
+          .filter((a) => a.destination === destination.slug)
+          .map((a) => a.category),
+      ),
+    ];
+    for (const categorySlug of categoriesWithContent) {
+      paths.push({
+        params: { destino: destination.slug, categoria: categorySlug },
+        props: { destination, categorySlug },
+      });
+    }
+  }
+  return paths;
+}
+
+const { destination, categorySlug } = Astro.props;
+const locale = 'en';
+const t = useTranslations(locale);
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+const articles = await contentService.getArticlesByCategory(
+  destination.slug as DestinationSlug,
+  categorySlug as CategorySlug,
+  locale,
+);
+
+const destName = destination.names[locale] ?? destination.names['es'] ?? destination.slug;
+const catLabel = t(`category.${categorySlug}`);
+const path = `/en/${destination.slug}/${categorySlug}`;
+---
+
+<BaseLayout
+  title={`${catLabel} in ${destName} — Colombia Travel Hub`}
+  description={t('seo.defaultDescription')}
+  canonical={`${siteUrl}${path}`}
+  ogImage={siteUrl + destination.image}
+  ogImageAlt={destination.imageAlt}
+  locale={locale}
+  alternates={seoService.buildHreflang(siteUrl, `/${destination.slug}/${categorySlug}`, ['es', 'en'])}
+  currentPath={path}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm text-muted mb-6">
+      <a href={`/en/${destination.slug}`} class="hover:text-primary transition-colors">{destName}</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-ink" aria-current="page">{catLabel}</span>
+    </nav>
+
+    <h1 class="font-display text-3xl sm:text-4xl font-bold text-ink mb-6">
+      {catLabel} in {destName}
+    </h1>
+
+    <CategoryNav
+      locale={locale}
+      destination={destination.slug as DestinationSlug}
+      activeCategory={categorySlug as CategorySlug}
+    />
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.length > 0
+        ? articles.map((article) => <ArticleCard article={article} locale={locale} />)
+        : <p class="text-muted col-span-full text-center py-12">{t('article.noArticles')}</p>
+      }
+    </div>
+  </div>
+</BaseLayout>

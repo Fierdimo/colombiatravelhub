@@ -1,0 +1,48 @@
+---
+import type { HreflangEntry, Locale } from '../core/domain/models';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage: string;
+  ogImageAlt: string;
+  locale: Locale;
+  alternates?: HreflangEntry[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogImageAlt,
+  locale,
+  alternates = [],
+} = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={ogImageAlt} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={locale === 'es' ? 'es_CO' : locale === 'en' ? 'en_US' : locale} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={ogImageAlt} />
+
+<!-- hreflang -->
+{alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.locale} href={alt.url} />
+))}

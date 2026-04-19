@@ -1,0 +1,140 @@
+---
+import type { Article, AffiliateLink, Locale } from '../core/domain/models';
+import type { HreflangEntry } from '../core/domain/models';
+import BaseLayout from './BaseLayout.astro';
+import AffiliateButton from '../components/AffiliateButton.astro';
+import CategoryNav from '../components/CategoryNav.astro';
+import { useTranslations, getLocalizedPath } from '../i18n';
+
+interface Props {
+  article: Article;
+  locale: Locale;
+  canonical: string;
+  alternates?: HreflangEntry[];
+  affiliateLinks?: AffiliateLink[];
+}
+
+const {
+  article,
+  locale,
+  canonical,
+  alternates = [],
+  affiliateLinks = [],
+} = Astro.props;
+
+const t = useTranslations(locale);
+const destinationPath = getLocalizedPath(`/${article.destination}`, locale);
+const categoryPath = getLocalizedPath(`/${article.destination}/${article.category}`, locale);
+
+const formattedDate = article.pubDate.toLocaleDateString(
+  locale === 'en' ? 'en-US' : 'es-CO',
+  { year: 'numeric', month: 'long', day: 'numeric' },
+);
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonical={canonical}
+  ogImage={article.image}
+  ogImageAlt={article.imageAlt}
+  locale={locale}
+  alternates={alternates}
+  currentPath={new URL(canonical).pathname}
+>
+  <!-- Hero image -->
+  <div class="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
+    <img
+      src={article.image}
+      alt={article.imageAlt}
+      width="1280"
+      height="640"
+      class="w-full h-full object-cover"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent"></div>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
+    <!-- Article card -->
+    <div class="bg-surface rounded-2xl shadow-[0_4px_32px_rgba(249,115,22,0.1)] p-6 sm:p-10 mb-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs text-muted mb-6 flex-wrap">
+        <a href={destinationPath} class="hover:text-primary transition-colors">
+          {t(`destination.${article.destination}`)}
+        </a>
+        <span aria-hidden="true">/</span>
+        <a href={categoryPath} class="hover:text-primary transition-colors">
+          {t(`category.${article.category}`)}
+        </a>
+        <span aria-hidden="true">/</span>
+        <span class="text-ink" aria-current="page">{article.title}</span>
+      </nav>
+
+      <!-- Title & meta -->
+      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4">
+        {article.title}
+      </h1>
+      <p class="text-muted text-sm mb-6">
+        <time datetime={article.pubDate.toISOString()}>
+          {t('article.publishedOn')} {formattedDate}
+        </time>
+      </p>
+
+      <!-- Primary CTA (visible without scroll on desktop) -->
+      {affiliateLinks.length > 0 && (
+        <div class="flex flex-wrap gap-3 mb-8 p-4 bg-sand rounded-xl border border-ink/5">
+          {affiliateLinks.slice(0, 2).map((link, i) => (
+            <AffiliateButton
+              link={link}
+              locale={locale}
+              variant={i === 0 ? 'primary' : 'secondary'}
+            />
+          ))}
+        </div>
+      )}
+
+      <!-- Article body -->
+      <div class="prose max-w-none">
+        <slot />
+      </div>
+
+      <!-- Bottom CTAs + trust signals -->
+      {affiliateLinks.length > 0 && (
+        <div class="mt-10 pt-8 border-t border-ink/10">
+          <p class="text-xs text-muted mb-4 text-center">{t('trust.secureBooking')} · {t('trust.freeCancellation')}</p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            {affiliateLinks.map((link, i) => (
+              <AffiliateButton
+                link={link}
+                locale={locale}
+                variant={i === 0 ? 'primary' : 'secondary'}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- Category navigation -->
+    <div class="mb-12">
+      <CategoryNav locale={locale} destination={article.destination} activeCategory={article.category} />
+    </div>
+  </div>
+
+  <!-- Sticky book bar (mobile only) -->
+  {affiliateLinks.length > 0 && (
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-ink/10 shadow-[0_-4px_16px_rgba(14,165,233,0.1)] p-3 flex gap-2">
+      {affiliateLinks.slice(0, 2).map((link, i) => (
+        <AffiliateButton
+          link={link}
+          locale={locale}
+          variant={i === 0 ? 'primary' : 'secondary'}
+          class="flex-1 text-sm py-2.5"
+        />
+      ))}
+    </div>
+  )}
+</BaseLayout>

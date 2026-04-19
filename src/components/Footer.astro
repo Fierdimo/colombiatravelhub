@@ -1,0 +1,66 @@
+---
+import type { Locale } from '../core/domain/models';
+import { useTranslations, getLocalizedPath } from '../i18n';
+import { CATEGORIES } from '../data/categories';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const homePath = getLocalizedPath('/', locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-white/80 mt-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+
+      <!-- Brand -->
+      <div class="flex flex-col gap-3">
+        <a href={homePath} class="font-display text-xl font-bold text-white hover:text-secondary transition-colors">
+          Colombia<span class="text-secondary">Travel</span>Hub
+        </a>
+        <p class="text-sm leading-relaxed text-white/60 max-w-xs">
+          {t('seo.defaultDescription')}
+        </p>
+      </div>
+
+      <!-- Categories -->
+      <nav aria-label="Footer categories">
+        <h3 class="text-white font-semibold mb-3 text-sm uppercase tracking-wider">
+          {t('nav.home')}
+        </h3>
+        <ul class="flex flex-col gap-2">
+          {CATEGORIES.map((cat) => (
+            <li>
+              <a
+                href={getLocalizedPath(`/cartagena/${cat.slug}`, locale)}
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                {t(`category.${cat.slug}`)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Legal -->
+      <div>
+        <h3 class="text-white font-semibold mb-3 text-sm uppercase tracking-wider">Legal</h3>
+        <p class="text-xs text-white/50 leading-relaxed">
+          {t('footer.affiliate')}
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+      <p>© {year} ColombiaTravelHub. {t('footer.rights')}</p>
+      <div class="flex gap-4">
+        <a href={getLocalizedPath('/privacidad', locale)} class="hover:text-white transition-colors">{t('footer.privacy')}</a>
+        <a href={getLocalizedPath('/contacto', locale)} class="hover:text-white transition-colors">{t('footer.contact')}</a>
+      </div>
+    </div>
+  </div>
+</footer>
