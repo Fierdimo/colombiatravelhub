@@ -7,7 +7,6 @@ category: hospedaje
 image: /images/hospedaje/donde-alojarse-cartagena.svg
 imageAlt: Patio colonial con vegetaciÃ³n tropical de un hotel boutique en el centro histÃ³rico de Cartagena
 affiliateIds:
-  - viator-cartagena-ciudad-amurallada
   - civitatis-cartagena-crucero-bahia
 translationSlugs:
   en: where-to-stay-cartagena

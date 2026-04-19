@@ -7,7 +7,6 @@ category: gastronomia
 image: /images/gastronomia/donde-comer-cartagena.svg
 imageAlt: Mesa con ceviche colombiano, patacones y coctelerÃ­a artesanal en un restaurante de Cartagena
 affiliateIds:
-  - viator-cartagena-food-tour
   - gyg-cartagena-food-tour
   - civitatis-cartagena-clase-cocina
 translationSlugs:

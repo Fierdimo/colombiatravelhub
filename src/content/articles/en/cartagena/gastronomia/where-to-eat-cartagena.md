@@ -8,7 +8,6 @@ image: /images/gastronomia/donde-comer-cartagena.svg
 imageAlt: Table with Colombian ceviche, patacones and artisan cocktails at a restaurant in Cartagena
 affiliateIds:
   - gyg-cartagena-food-tour
-  - viator-cartagena-food-tour
   - civitatis-cartagena-clase-cocina
 translationSlugs:
   en: where-to-eat-cartagena

@@ -7,9 +7,7 @@ category: tours
 image: /images/tours/tours-cartagena.svg
 imageAlt: Barcos de tour en la bahÃ­a de Cartagena al atardecer con el centro amurallado al fondo
 affiliateIds:
-  - viator-cartagena-ciudad-amurallada
   - civitatis-cartagena-chiva-rumbera
-  - viator-cartagena-islas-rosario
 translationSlugs:
   en: best-tours-cartagena
 ---

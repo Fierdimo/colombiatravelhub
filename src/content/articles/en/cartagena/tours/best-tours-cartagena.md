@@ -8,8 +8,6 @@ image: /images/tours/tours-cartagena.svg
 imageAlt: Tour boats in Cartagena Bay at sunset with the walled city in the background
 affiliateIds:
   - gyg-cartagena-walking-tour
-  - viator-cartagena-ciudad-amurallada
-  - viator-cartagena-islas-rosario
   - civitatis-cartagena-chiva-rumbera
 translationSlugs:
   en: best-tours-cartagena

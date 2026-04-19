@@ -10,8 +10,6 @@ affiliateIds:
   - gyg-cartagena-walking-tour
   - civitatis-cartagena-playa-blanca
   - civitatis-cartagena-chiva-rumbera
-  - viator-cartagena-islas-rosario
-  - viator-cartagena-food-tour
 translationSlugs:
   en: 3-days-in-cartagena
 ---

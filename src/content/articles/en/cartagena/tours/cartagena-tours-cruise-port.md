@@ -8,9 +8,7 @@ image: /images/tours/tours-cartagena.svg
 imageAlt: Cruise ship in Cartagena Bay with the historic walled city visible in the background
 affiliateIds:
   - gyg-cartagena-walking-tour
-  - viator-cartagena-ciudad-amurallada
   - civitatis-cartagena-playa-blanca
-  - viator-cartagena-castillo-san-felipe
 translationSlugs:
   en: cartagena-tours-cruise-port
 ---

@@ -7,9 +7,7 @@ category: itinerarios
 image: /images/itinerarios/cartagena-con-ninos.svg
 imageAlt: Familia con niÃ±os en la playa de las Islas del Rosario con aguas transparentes y arrecifes de coral
 affiliateIds:
-  - viator-cartagena-islas-rosario
   - civitatis-cartagena-playa-blanca
-  - viator-cartagena-ciudad-amurallada
   - civitatis-cartagena-crucero-bahia
 translationSlugs:
   en: cartagena-with-kids

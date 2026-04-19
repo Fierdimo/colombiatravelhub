@@ -9,7 +9,6 @@ imageAlt: Vista aÃ©rea de Playa Blanca en la isla de BarÃº con aguas turques
 affiliateIds:
   - civitatis-cartagena-playa-blanca
   - gyg-cartagena-playa-blanca-snorkel
-  - viator-cartagena-islas-rosario
   - civitatis-cartagena-snorkel-rosario
 translationSlugs:
   en: best-beaches-cartagena

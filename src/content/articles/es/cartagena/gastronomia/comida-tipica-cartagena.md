@@ -8,7 +8,6 @@ image: /images/gastronomia/comida-tipica-cartagena.svg
 imageAlt: Variedad de platos tÃ­picos colombianos incluyendo arepa de huevo, ceviche y patacones en Cartagena
 affiliateIds:
   - civitatis-cartagena-clase-cocina
-  - viator-cartagena-food-tour
 translationSlugs:
   en: typical-food-cartagena
 ---

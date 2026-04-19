@@ -7,11 +7,9 @@ category: itinerarios
 image: /images/itinerarios/3-dias-cartagena.svg
 imageAlt: Vista panorÃ¡mica de las murallas y centro histÃ³rico de Cartagena de Indias al amanecer
 affiliateIds:
-  - viator-cartagena-ciudad-amurallada
   - civitatis-cartagena-playa-blanca
   - civitatis-cartagena-chiva-rumbera
   - gyg-cartagena-walking-tour
-  - viator-cartagena-islas-rosario
 translationSlugs:
   en: 3-days-in-cartagena
 ---

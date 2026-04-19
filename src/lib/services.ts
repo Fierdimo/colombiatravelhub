@@ -7,7 +7,6 @@
  */
 import { AstroContentAdapter } from '../adapters/content/AstroContentAdapter';
 import { FileTranslationAdapter } from '../adapters/i18n/FileTranslationAdapter';
-import { ViatorAdapter } from '../adapters/affiliates/ViatorAdapter';
 import { CivitatisAdapter } from '../adapters/affiliates/CivitatisAdapter';
 import { GetYourGuideAdapter } from '../adapters/affiliates/GetYourGuideAdapter';
 import { ContentService } from '../core/services/ContentService';
@@ -29,12 +28,11 @@ let _affiliateService: AffiliateService | null = null;
 export async function getAffiliateService(): Promise<AffiliateService> {
   if (_affiliateService) return _affiliateService;
 
-  const [viator, civitatis, gyg] = await Promise.all([
-    ViatorAdapter.create(),
+  const [civitatis, gyg] = await Promise.all([
     CivitatisAdapter.create(),
     GetYourGuideAdapter.create(),
   ]);
 
-  _affiliateService = new AffiliateService([viator, civitatis, gyg]);
+  _affiliateService = new AffiliateService([civitatis, gyg]);
   return _affiliateService;
 }

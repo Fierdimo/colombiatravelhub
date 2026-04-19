@@ -9,7 +9,6 @@ imageAlt: Playa Blanca de BarÃº con palmeras, arena blanca y aguas turquesas d
 affiliateIds:
   - civitatis-cartagena-playa-blanca
   - gyg-cartagena-playa-blanca-snorkel
-  - viator-cartagena-sunset-sailing
 translationSlugs:
   en: playa-blanca-cartagena
 ---

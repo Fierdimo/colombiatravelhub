@@ -9,7 +9,6 @@ imageAlt: Aerial view of Playa Blanca on BarÃº Island with turquoise waters an
 affiliateIds:
   - civitatis-cartagena-playa-blanca
   - gyg-cartagena-playa-blanca-snorkel
-  - viator-cartagena-islas-rosario
   - gyg-cartagena-catamaran
 translationSlugs:
   en: best-beaches-cartagena
