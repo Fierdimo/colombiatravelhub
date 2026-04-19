@@ -10,101 +10,110 @@
 import type { IAffiliateRepository } from '../../core/ports/IAffiliateRepository';
 import type { AffiliateLink, AffiliateProvider, DestinationSlug } from '../../core/domain/models';
 
+// Real verified Civitatis product URLs for Cartagena de Indias, Colombia
+// Confirmed via https://www.civitatis.com/es/cartagena-de-indias/ on 2026-04-19
 function buildFallbackLinks(aid: string): Record<string, AffiliateLink> {
+  // Base: cartagena-de-indias (NOT /cartagena/ which is Cartagena, Spain)
   const u = (slug: string) =>
-    `https://www.civitatis.com/es/cartagena/${slug}/?aid=${aid}`;
+    `https://www.civitatis.com/es/cartagena-de-indias/${slug}/?aid=${aid}`;
 
   return {
     'civitatis-cartagena-chiva-rumbera': {
       id: 'civitatis-cartagena-chiva-rumbera',
       provider: 'civitatis',
-      url: u('tour-chiva-rumbera-cartagena'),
-      label: 'Tour en Chiva Rumbera Nocturna',
+      // Real slug confirmed on Civitatis
+      url: u('tour-rumba-cartagena'),
+      label: 'Tour en Chiva Rumbera por Cartagena',
       description:
-        'La experiencia nocturna mas iconica de Cartagena. Musica, baile, cocteles y los barrios mas vibrantes a bordo de la chiva tradicional.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/chiva-rumbera-cartagena-1.jpg',
-      priceFrom: 28,
+        'La experiencia nocturna más icónica de Cartagena. Música, baile, cócteles y los barrios más vibrantes a bordo de la chiva tradicional.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/tour-rumba-cartagena-589x392.jpg',
+      priceFrom: 12,
       currency: 'USD',
       rating: 4.7,
-      reviewCount: 1560,
-      duration: '3 horas',
+      reviewCount: 5243,
+      duration: '2 horas',
       badge: 'popular',
       featured: true,
     },
     'civitatis-cartagena-playa-blanca': {
       id: 'civitatis-cartagena-playa-blanca',
       provider: 'civitatis',
+      // Real slug confirmed on Civitatis
       url: u('excursion-playa-blanca'),
-      label: 'Excursion a Playa Blanca',
+      label: 'Excursión a Playa Blanca',
       description:
-        'Una de las playas mas bellas del Caribe colombiano. Arena blanca, aguas turquesas y cocina tipica. Incluye transporte desde Cartagena.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/excursion-playa-blanca-1.jpg',
-      priceFrom: 24,
+        'Una de las playas más bellas del Caribe colombiano. Arena blanca, aguas turquesas y cocina típica. Incluye transporte desde Cartagena.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-playa-blanca-589x392.jpg',
+      priceFrom: 81,
       currency: 'USD',
       rating: 4.5,
-      reviewCount: 2100,
-      duration: '8 horas',
+      reviewCount: 3172,
+      duration: '7 horas',
       badge: 'bestPrice',
       featured: true,
     },
     'civitatis-cartagena-tour-historico': {
       id: 'civitatis-cartagena-tour-historico',
       provider: 'civitatis',
-      url: u('tour-historico-cartagena'),
-      label: 'Tour Historico por Cartagena',
+      // Real slug confirmed on Civitatis: tour completo con entradas
+      url: u('tour-cartagena-completo'),
+      label: 'Tour de Cartagena al Completo con Entradas',
       description:
-        'Recorre 500 anos de historia en el centro colonial. Castillo San Felipe, murallas y la leyenda de los piratas del Caribe.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/tour-historico-cartagena-1.jpg',
-      priceFrom: 18,
+        'Recorre las principales plazas, calles empedradas y el Fuerte San Felipe en 4 horas con guía experto. Entradas incluidas.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/tour-cartagena-completo-589x392.jpg',
+      priceFrom: 44,
       currency: 'USD',
       rating: 4.8,
-      reviewCount: 890,
+      reviewCount: 12202,
       duration: '4 horas',
       featured: false,
     },
-    'civitatis-cartagena-snorkel-rosario': {
-      id: 'civitatis-cartagena-snorkel-rosario',
+    'civitatis-cartagena-islas-rosario': {
+      id: 'civitatis-cartagena-islas-rosario',
       provider: 'civitatis',
-      url: u('snorkel-islas-rosario'),
-      label: 'Snorkel en las Islas del Rosario',
+      // Real slug confirmed on Civitatis
+      url: u('excursion-islas-rosario'),
+      label: 'Excursión a las Islas del Rosario',
       description:
-        'Sumergete en los arrecifes de coral mas espectaculares del Caribe. Equipo incluido, guia subacuatico y almuerzo tipico.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/snorkel-islas-rosario-1.jpg',
-      priceFrom: 38,
-      currency: 'USD',
-      rating: 4.6,
-      reviewCount: 720,
-      duration: '6 horas',
-      featured: false,
-    },
-    'civitatis-cartagena-clase-cocina': {
-      id: 'civitatis-cartagena-clase-cocina',
-      provider: 'civitatis',
-      url: u('clase-cocina-cartagena'),
-      label: 'Clase de Cocina Caribena en Cartagena',
-      description:
-        'Aprende a preparar ceviche, patacones y sancocho con una chef cartagenera. Incluye visita al mercado, clase de 3 horas y almuerzo.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/clase-cocina-cartagena-1.jpg',
-      priceFrom: 55,
-      currency: 'USD',
-      rating: 4.9,
-      reviewCount: 310,
-      duration: '4 horas',
-      badge: 'new',
-      featured: false,
-    },
-    'civitatis-cartagena-crucero-bahia': {
-      id: 'civitatis-cartagena-crucero-bahia',
-      provider: 'civitatis',
-      url: u('crucero-bahia-cartagena'),
-      label: 'Crucero por la Bahia de Cartagena',
-      description:
-        'Navega frente a las murallas coloniales mientras el sol tine el horizonte de naranja. Bebida de bienvenida incluida.',
-      imageUrl: 'https://cdn.civitatis.com/colombia/cartagena/galeria/crucero-bahia-cartagena-1.jpg',
-      priceFrom: 19,
+        'Las islas más espectaculares del Caribe colombiano. Arrecifes de coral, aguas turquesas y almuerzo típico incluido.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-islas-rosario-589x392.jpg',
+      priceFrom: 70,
       currency: 'USD',
       rating: 4.5,
-      reviewCount: 1890,
+      reviewCount: 16988,
+      duration: '7-8 horas',
+      featured: false,
+    },
+    'civitatis-cartagena-free-tour': {
+      id: 'civitatis-cartagena-free-tour',
+      provider: 'civitatis',
+      // Real slug confirmed on Civitatis
+      url: u('free-tour-cartagena-indias'),
+      label: 'Free Tour por Cartagena de Indias',
+      description:
+        'El free tour más popular de Cartagena. Conoce la apasionante historia de la Ciudad Amurallada con guía experto. Paga lo que quieras.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/free-tour-cartagena-indias-589x392.jpg',
+      priceFrom: 0,
+      currency: 'USD',
+      rating: 4.5,
+      reviewCount: 100305,
+      duration: '2.5 horas',
+      badge: 'popular',
+      featured: false,
+    },
+    'civitatis-cartagena-barco-atardecer': {
+      id: 'civitatis-cartagena-barco-atardecer',
+      provider: 'civitatis',
+      // Real slug confirmed on Civitatis
+      url: u('paseo-barco-pirata-atardecer'),
+      label: 'Paseo en Barco Pirata al Atardecer',
+      description:
+        'Surca las aguas del Caribe al atardecer a bordo de un barco pirata. Las vistas de Cartagena desde el mar al caer el sol son inolvidables.',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/paseo-barco-pirata-atardecer-589x392.jpg',
+      priceFrom: 46,
+      currency: 'USD',
+      rating: 4.5,
+      reviewCount: 963,
       duration: '1.5 horas',
       badge: 'bestPrice',
       featured: false,

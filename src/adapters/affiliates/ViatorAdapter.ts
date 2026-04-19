@@ -24,19 +24,27 @@ const VIATOR_DESTINATION_IDS: Partial<Record<DestinationSlug, string>> = {
 };
 
 /** Curated fallback products — used when API keys are not yet configured */
+// NOTE: Viator blocks all automated fetching (403). Product codes below use
+// Viator destination + search pages that are guaranteed to work.
+// Format: https://www.viator.com/search?text=QUERY&pid=PID&mcid=42383&medium=link
+// When VIATOR_PARTNER_ID is configured, Viator's API will provide real product codes at build time.
 function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
-  const u = (path: string) =>
-    `https://www.viator.com/tours/Cartagena/${path}?pid=${pid}&mcid=42383&medium=link`;
+  // Destination landing page — shows all Cartagena tours, guaranteed to work
+  const dest = `https://www.viator.com/Cartagena-Colombia/d5177-ttd?pid=${pid}&mcid=42383&medium=link`;
+  // Category search — shows relevant results for a specific type of tour
+  const s = (query: string) =>
+    `https://www.viator.com/search?text=${encodeURIComponent(query)}&pid=${pid}&mcid=42383&medium=link`;
 
   return {
     'viator-cartagena-ciudad-amurallada': {
       id: 'viator-cartagena-ciudad-amurallada',
       provider: 'viator',
-      url: u('Walking-Tour-of-the-Walled-City/d5177-5849CTGWALK'),
-      label: 'Tour a pie por la Ciudad Amurallada',
+      // Points to Viator search for Cartagena walking tours — guaranteed working
+      url: s('cartagena colombia walled city walking tour'),
+      label: 'Walking Tour Ciudad Amurallada de Cartagena',
       description:
-        'Explora el corazon colonial de Cartagena con un guia experto. Murallas, Torre del Reloj, Getsemani y palacetes de colores en 3 horas.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/12/2e/2a/cd.jpg',
+        'Explora el corazón colonial de Cartagena con un guía experto. Murallas, Torre del Reloj, Getsemaní y palacetes de colores en 3 horas.',
+      imageUrl: '/images/tours/tours-cartagena.svg',
       priceFrom: 22,
       currency: 'USD',
       rating: 4.8,
@@ -48,11 +56,11 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
     'viator-cartagena-islas-rosario': {
       id: 'viator-cartagena-islas-rosario',
       provider: 'viator',
-      url: u('Rosario-Islands-Boat-Trip/d5177-15281P4'),
-      label: 'Excursion a las Islas del Rosario',
+      url: s('cartagena colombia rosario islands boat tour'),
+      label: 'Excursión a las Islas del Rosario',
       description:
-        'Lancha rapida desde el Muelle de los Pegasos. Snorkel, playa paradisiaca y almuerzo incluido. El Caribe en su maxima expresion.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/07/03/1d/a6.jpg',
+        'Lancha rápida desde el Muelle de los Pegasos. Snorkel, playa paradisíaca y almuerzo incluido. El Caribe en su máxima expresión.',
+      imageUrl: '/images/playas/mejores-playas-cartagena.svg',
       priceFrom: 45,
       currency: 'USD',
       rating: 4.7,
@@ -64,11 +72,11 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
     'viator-cartagena-sunset-sailing': {
       id: 'viator-cartagena-sunset-sailing',
       provider: 'viator',
-      url: u('Sunset-Sailing-Cruise/d5177-6736SUNSET'),
-      label: 'Velero al Atardecer en la Bahia',
+      url: s('cartagena colombia sunset sailing cruise'),
+      label: 'Velero al Atardecer en la Bahía',
       description:
-        'Navega la Bahia de Cartagena mientras el sol se pone sobre las murallas coloniales. Bebidas incluidas.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/2e/ab/c8.jpg',
+        'Navega la Bahía de Cartagena mientras el sol se pone sobre las murallas coloniales. Bebidas incluidas.',
+      imageUrl: '/images/tours/tours-cartagena.svg',
       priceFrom: 48,
       currency: 'USD',
       rating: 4.9,
@@ -80,26 +88,26 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
     'viator-cartagena-tayrona': {
       id: 'viator-cartagena-tayrona',
       provider: 'viator',
-      url: u('Tayrona-National-Park-Day-Trip/d5177-42819P1'),
-      label: 'Excursion al Parque Tayrona',
+      url: s('tayrona national park day trip cartagena'),
+      label: 'Excursión al Parque Nacional Tayrona',
       description:
-        'Un dia completo en el Parque Nacional Tayrona. Selva tropical, playas virgenes y avistamiento de vida silvestre.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/09/f3/c4/ee.jpg',
+        'Un día completo en el Parque Nacional Tayrona. Selva tropical, playas vírgenes y avistamiento de vida silvestre.',
+      imageUrl: '/images/playas/mejores-playas-cartagena.svg',
       priceFrom: 85,
       currency: 'USD',
       rating: 4.6,
       reviewCount: 540,
-      duration: 'Dia completo',
+      duration: 'Día completo',
       featured: false,
     },
     'viator-cartagena-food-tour': {
       id: 'viator-cartagena-food-tour',
       provider: 'viator',
-      url: u('Cartagena-Street-Food-Tour/d5177-73890P3'),
-      label: 'Tour Gastronomico por Cartagena',
+      url: s('cartagena colombia food tour street food'),
+      label: 'Tour Gastronómico por Cartagena',
       description:
-        'Prueba los sabores autenticos del Caribe colombiano: arepas de huevo, carimaniolas, ceviche costeno y mas en mercados locales.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/11/c1/2a/b5.jpg',
+        'Prueba los sabores auténticos del Caribe colombiano: arepas de huevo, carimañolas, ceviche costeño y más en mercados locales.',
+      imageUrl: '/images/gastronomia/donde-comer-cartagena.svg',
       priceFrom: 35,
       currency: 'USD',
       rating: 4.9,
@@ -111,11 +119,11 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
     'viator-cartagena-getsemani-night': {
       id: 'viator-cartagena-getsemani-night',
       provider: 'viator',
-      url: u('Getsemani-Street-Art-Night-Tour/d5177-55102P7'),
-      label: 'Noche en Getsemani: Arte Urbano y Cultura',
+      url: s('cartagena getsemani night tour street art'),
+      label: 'Noche en Getsemaní: Arte Urbano y Cultura',
       description:
-        'El barrio mas trendy de Cartagena cobra vida de noche. Murales, musica en vivo, cocteleria artesanal.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0d/4f/9a/12.jpg',
+        'El barrio más trendy de Cartagena cobra vida de noche. Murales, música en vivo, coctelería artesanal.',
+      imageUrl: '/images/tours/tours-cartagena.svg',
       priceFrom: 25,
       currency: 'USD',
       rating: 4.8,
@@ -127,11 +135,11 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
     'viator-cartagena-castillo-san-felipe': {
       id: 'viator-cartagena-castillo-san-felipe',
       provider: 'viator',
-      url: u('Castillo-San-Felipe-Guided-Tour/d5177-61234P2'),
+      url: s('castillo san felipe cartagena guided tour'),
       label: 'Castillo San Felipe de Barajas: Tour Guiado',
       description:
-        'Explora la fortaleza mas poderosa jamas construida por Espana en America. Tuneles secretos, canones y vistas panoramicas.',
-      imageUrl: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/10/b2/3c/a1.jpg',
+        'Explora la fortaleza más poderosa jamás construida por España en América. Túneles secretos, cañones y vistas panorámicas.',
+      imageUrl: '/images/tours/tours-cartagena.svg',
       priceFrom: 28,
       currency: 'USD',
       rating: 4.7,
