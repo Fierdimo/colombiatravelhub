@@ -1,7 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import ArticleLayout from '../../../../layouts/ArticleLayout.astro';
-import { contentService, affiliateService, seoService } from '../../../../lib/services';
+import { contentService, seoService, getAffiliateService } from '../../../../lib/services';
 import type { CategorySlug, DestinationSlug } from '../../../../core/domain/models';
 import { ACTIVE_DESTINATIONS } from '../../../../data/destinations';
 
@@ -24,7 +24,8 @@ const locale = 'en';
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const canonicalPath = `/en/${article.destination}/${article.category}/${article.slug}`;
 
-const affiliateLinks = await affiliateService.getLinksForIds(article.affiliateIds);
+const affiliateService = await getAffiliateService();
+const affiliateLinks = affiliateService.getLinksForIds(article.affiliateIds);
 
 const alternates = contentService.buildArticleAlternates(
   article,

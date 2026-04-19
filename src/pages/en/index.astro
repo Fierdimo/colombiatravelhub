@@ -3,15 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import DestinationCard from '../../components/DestinationCard.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { useTranslations } from '../../i18n';
-import { seoService, affiliateService } from '../../lib/services';
+import { seoService, getAffiliateService } from '../../lib/services';
 import { ACTIVE_DESTINATIONS } from '../../data/destinations';
-import { FEATURED_CARTAGENA_IDS } from '../../data/featured';
 
 const locale = 'en';
 const t = useTranslations(locale);
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 
-const featuredLinks = affiliateService.getLinksForIds(FEATURED_CARTAGENA_IDS);
+const affiliateService = await getAffiliateService();
+const featuredLinks = affiliateService.getFeaturedForDestination('cartagena');
 
 const seo = seoService.buildMetadata({
   title: t('seo.defaultTitle'),

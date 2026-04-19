@@ -1,6 +1,9 @@
 /**
  * Composition root — wires concrete adapters to services.
  * Pages and layouts import from here; they never import adapters directly.
+ *
+ * affiliateService is lazy-initialised because the adapters use async factories
+ * that may call external APIs at build time. Use `getAffiliateService()` in pages.
  */
 import { AstroContentAdapter } from '../adapters/content/AstroContentAdapter';
 import { FileTranslationAdapter } from '../adapters/i18n/FileTranslationAdapter';
@@ -14,12 +17,24 @@ import { I18nService } from '../core/services/I18nService';
 
 export const contentService = new ContentService(new AstroContentAdapter());
 
-export const affiliateService = new AffiliateService([
-  new ViatorAdapter(),
-  new CivitatisAdapter(),
-  new GetYourGuideAdapter(),
-]);
-
 export const seoService = new SeoService();
 
 export const i18nService = new I18nService(new FileTranslationAdapter());
+
+// ---------------------------------------------------------------------------
+// Affiliate service — async singleton (adapters may fetch from APIs at build)
+// ---------------------------------------------------------------------------
+let _affiliateService: AffiliateService | null = null;
+
+export async function getAffiliateService(): Promise<AffiliateService> {
+  if (_affiliateService) return _affiliateService;
+
+  const [viator, civitatis, gyg] = await Promise.all([
+    ViatorAdapter.create(),
+    CivitatisAdapter.create(),
+    GetYourGuideAdapter.create(),
+  ]);
+
+  _affiliateService = new AffiliateService([viator, civitatis, gyg]);
+  return _affiliateService;
+}

@@ -1,5 +1,5 @@
 import type { IAffiliateRepository } from '../ports/IAffiliateRepository';
-import type { AffiliateLink } from '../domain/models';
+import type { AffiliateLink, DestinationSlug } from '../domain/models';
 
 export class AffiliateService {
   constructor(private readonly repos: IAffiliateRepository[]) {}
@@ -17,5 +17,14 @@ export class AffiliateService {
       }
     }
     return links;
+  }
+
+  /**
+   * Returns all featured products for a destination across all providers.
+   * When API keys are configured, these are real-time products from the platforms.
+   * Falls back to curated hardcoded products otherwise.
+   */
+  getFeaturedForDestination(destination: DestinationSlug): AffiliateLink[] {
+    return this.repos.flatMap((repo) => repo.getFeaturedLinks(destination));
   }
 }
