@@ -1,0 +1,43 @@
+---
+/**
+ * Viator Activities Widget
+ *
+ * Muestra tours y actividades REALES de Viator directamente en el sitio.
+ * Funciona con el Partner ID (PID) de Viator — no requiere API key adicional.
+ * Los productos se cargan en el cliente vía el script oficial de Viator.
+ *
+ * Documentación: https://www.viator.com/partner/affiliate-marketing-tools/
+ */
+interface Props {
+  partnerId: string;
+  destinationId?: string; // Viator destination ID — Cartagena = 5177
+  count?: number;
+  locale?: string;
+  class?: string;
+}
+
+const {
+  partnerId,
+  destinationId = '5177',
+  count = 4,
+  locale = 'es',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`viator-widget-wrapper ${className}`}>
+  <div
+    id="viator-widget"
+    data-viator-pid={partnerId}
+    data-viator-destination={destinationId}
+    data-viator-count={String(count)}
+    data-viator-lang={locale}
+    data-viator-currency="USD"
+    style="min-height: 350px;"
+  ></div>
+  <script
+    async
+    defer
+    src={`https://www.viator.com/orion/partner/widget.js`}
+  ></script>
+</div>

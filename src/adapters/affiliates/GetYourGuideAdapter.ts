@@ -9,7 +9,6 @@
  */
 import type { IAffiliateRepository } from '../../core/ports/IAffiliateRepository';
 import type { AffiliateLink, AffiliateProvider, DestinationSlug } from '../../core/domain/models';
-import { fetchGYGActivities } from '../../lib/affiliateFetch';
 
 function buildFallbackLinks(partnerId: string): Record<string, AffiliateLink> {
   const u = (path: string) =>
@@ -92,24 +91,14 @@ export class GetYourGuideAdapter implements IAffiliateRepository {
   ) {}
 
   /**
-   * Async factory. When GYG_PARTNER_ID is set, fetches real activities
-   * from the GetYourGuide Affiliate API at build time.
-   * Falls back to hardcoded curated products when the key is absent.
+   * Async factory. Injects GYG_PARTNER_ID into affiliate URLs.
+   * Note: GYG's activities search API requires Technology Partner status.
+   * Live products are shown via the GYGWidget.astro component instead.
+   * The product cards here serve as curated affiliate links in article pages.
    */
   static async create(): Promise<GetYourGuideAdapter> {
     const partnerId =
       (import.meta.env.GYG_PARTNER_ID as string | undefined) ?? 'YOUR_GYG_PARTNER_ID';
-
-    if (partnerId !== 'YOUR_GYG_PARTNER_ID') {
-      const cartagenaLinks = await fetchGYGActivities(partnerId, 'cartagena', 20);
-      if (cartagenaLinks.length > 0) {
-        const linksMap: Record<string, AffiliateLink> = {};
-        cartagenaLinks.forEach((l) => {
-          linksMap[l.id] = l;
-        });
-        return new GetYourGuideAdapter(linksMap, { cartagena: cartagenaLinks });
-      }
-    }
 
     const fallback = buildFallbackLinks(partnerId);
     const featured = Object.values(fallback).filter((l) => l.featured);

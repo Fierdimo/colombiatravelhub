@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DestinationCard from '../components/DestinationCard.astro';
 import ProductCard from '../components/ProductCard.astro';
+import GYGWidget from '../components/GYGWidget.astro';
 import { useTranslations } from '../i18n';
 import { seoService, getAffiliateService } from '../lib/services';
 import { ACTIVE_DESTINATIONS } from '../data/destinations';
@@ -17,7 +18,7 @@ const seo = seoService.buildMetadata({
   title: t('seo.defaultTitle'),
   description: t('seo.defaultDescription'),
   canonical: siteUrl + '/',
-  ogImage: siteUrl + '/images/og-default.jpg',
+  ogImage: siteUrl + '/images/og-default.svg',
   ogImageAlt: 'Colombia Travel Hub',
   alternates: seoService.buildHreflang(siteUrl, '/', ['es', 'en']),
 });
@@ -142,6 +143,31 @@ const seo = seoService.buildMetadata({
       ))}
     </div>
   </section>
+
+  <!-- GetYourGuide Live Activities Widget -->
+  {
+    import.meta.env.GYG_PARTNER_ID && (
+      <section class="bg-white py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#FF6600">GetYourGuide</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-ink mb-3">
+              Actividades en Cartagena
+            </h2>
+            <p class="text-muted text-lg max-w-2xl mx-auto">
+              Reserva directamente en GetYourGuide con cancelación gratuita en la mayoría de actividades.
+            </p>
+          </div>
+          <GYGWidget
+            partnerId={import.meta.env.GYG_PARTNER_ID}
+            query="cartagena"
+            count={8}
+            locale="es-ES"
+          />
+        </div>
+      </section>
+    )
+  }
 
   <!-- Provider logos strip -->
   <section class="bg-surface border-y border-ink/5 py-10">

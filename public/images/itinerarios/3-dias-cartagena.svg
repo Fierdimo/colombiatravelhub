@@ -1,0 +1,13 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#064e3b"/>
+      <stop offset="100%" style="stop-color:#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <circle cx="180" cy="135" r="371.25" fill="white" opacity="0.04"/>
+  <circle cx="1020" cy="540" r="303.75" fill="white" opacity="0.04"/>
+  <text x="600" y="317.25" font-family="Georgia,serif" font-size="52" font-weight="bold" fill="white" text-anchor="middle" opacity="0.95">3 Dias en Cartagena</text>
+  <text x="600" y="418.5" font-family="Georgia,serif" font-size="26" fill="white" text-anchor="middle" opacity="0.7">El itinerario perfecto</text>
+</svg>

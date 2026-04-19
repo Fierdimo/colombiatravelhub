@@ -1,0 +1,44 @@
+---
+/**
+ * GetYourGuide Activities Widget
+ *
+ * Muestra actividades REALES y actualizadas directamente desde GetYourGuide.
+ * Funciona con el partner ID estándar de afiliado — no requiere API key especial.
+ * Los productos se cargan en el cliente vía el script oficial de GYG.
+ *
+ * Documentación: https://partner.getyourguide.com/en-us/tools/widgets/
+ */
+interface Props {
+  partnerId: string;
+  query: string;
+  count?: number;
+  locale?: string;
+  class?: string;
+}
+
+const {
+  partnerId,
+  query,
+  count = 4,
+  locale = 'es-ES',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`gyg-widget-wrapper ${className}`}>
+  <div
+    data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+    data-gyg-locale-code={locale}
+    data-gyg-widget="activities"
+    data-gyg-number-of-items={String(count)}
+    data-gyg-partner-id={partnerId}
+    data-gyg-q={query}
+    data-gyg-cmp="widget"
+  ></div>
+  <!-- GYG widget script — loaded async so it never blocks render -->
+  <script
+    async
+    defer
+    src="https://widget.getyourguide.com/default/activities.frame.js"
+  ></script>
+</div>

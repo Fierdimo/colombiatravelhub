@@ -1,10 +1,10 @@
----
+﻿---
 title: Best Tours in Cartagena de Indias
 description: Discover the most popular tours in Cartagena de Indias, from boat trips to historic visits to the walled city and excursions to the Rosario Islands.
 pubDate: 2026-04-19
 destination: cartagena
 category: tours
-image: /images/tours/tours-cartagena.jpg
+image: /images/tours/tours-cartagena.svg
 imageAlt: Tour boats in Cartagena Bay at sunset with the walled city in the background
 affiliateIds:
   - gyg-cartagena-walking-tour
@@ -36,5 +36,6 @@ The chiva is Colombia's traditional bus, and in Cartagena it has become an unmis
 
 - **Book in advance** during high season (December-January and July)
 - **Check reviews** on platforms like Viator or GetYourGuide before booking
-- **Compare prices** — some tours include lunch and snorkel equipment
-- **Ask about cancellation** — the best operators offer free cancellation
+- **Compare prices** â€” some tours include lunch and snorkel equipment
+- **Ask about cancellation** â€” the best operators offer free cancellation
+

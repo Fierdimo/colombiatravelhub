@@ -139,14 +139,17 @@ export async function fetchGYGActivities(
 ): Promise<AffiliateLink[]> {
   try {
     const url = new URL('https://api.getyourguide.com/1/activities');
-    url.searchParams.set('partner_id', partnerId);
     url.searchParams.set('q', query);
     url.searchParams.set('count', String(count));
     url.searchParams.set('sort_by', 'popularity');
     url.searchParams.set('lang', 'es');
 
+    // GYG API requires the partner ID in the X-Partner-Id header, not as a query param
     const res = await fetch(url.toString(), {
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'X-Partner-Id': partnerId,
+      },
     });
 
     if (!res.ok) {

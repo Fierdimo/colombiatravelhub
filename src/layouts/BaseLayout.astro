@@ -1,4 +1,4 @@
----
+﻿---
 import type { HreflangEntry, Locale } from '../core/domain/models';
 import { useTranslations } from '../i18n';
 import SEO from '../components/SEO.astro';
@@ -26,7 +26,7 @@ const {
   title,
   description,
   canonical,
-  ogImage = '/images/og-default.jpg',
+  ogImage = '/images/og-default.svg',
   ogImageAlt = 'Colombia Travel Hub',
   locale,
   alternates = [],
@@ -59,3 +59,4 @@ const {
     <Footer locale={locale} />
   </body>
 </html>
+
