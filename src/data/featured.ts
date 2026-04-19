@@ -10,4 +10,6 @@ export const FEATURED_CARTAGENA_IDS: string[] = [
   'civitatis-cartagena-playa-blanca',
   'gyg-cartagena-walking-tour',
   'gyg-cartagena-catamaran',
+  'viator-cartagena-food-tour',
+  'viator-cartagena-sunset-sailing',
 ];

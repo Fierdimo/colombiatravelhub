@@ -6,7 +6,11 @@ destination: cartagena
 category: tours
 image: /images/tours/tours-cartagena.jpg
 imageAlt: Tour boats in Cartagena Bay at sunset with the walled city in the background
-affiliateIds: []
+affiliateIds:
+  - gyg-cartagena-walking-tour
+  - viator-cartagena-ciudad-amurallada
+  - viator-cartagena-islas-rosario
+  - civitatis-cartagena-chiva-rumbera
 translationSlugs:
   en: best-tours-cartagena
 ---

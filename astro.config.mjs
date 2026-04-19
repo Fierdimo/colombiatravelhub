@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://colombiatravelhub.com',
+  site: 'https://colombiatravelhub.vercel.app/',
   integrations: [
     sitemap({
       i18n: {
