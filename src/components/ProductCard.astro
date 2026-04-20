@@ -1,6 +1,7 @@
 ﻿---
 import type { AffiliateLink, Locale } from '../core/domain/models';
 import { useTranslations } from '../i18n';
+import { localizeAffiliateUrl } from '../lib/localizeAffiliateUrl';
 
 interface Props {
   link: AffiliateLink;
@@ -9,6 +10,7 @@ interface Props {
 
 const { link, locale } = Astro.props;
 const t = useTranslations(locale);
+const bookingUrl = localizeAffiliateUrl(link.url, locale);
 
 const providerMeta: Record<string, { name: string; color: string; textColor: string }> = {
   viator:       { name: 'Viator',         color: '#1DAD65', textColor: 'white' },
@@ -143,7 +145,7 @@ const formattedReviews = link.reviewCount
 
     <!-- CTA button -->
     <a
-      href={link.url}
+      href={bookingUrl}
       target="_blank"
       rel="noopener noreferrer sponsored"
       class="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white transition-all duration-150 hover:brightness-110 active:translate-y-0.5 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

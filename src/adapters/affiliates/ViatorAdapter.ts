@@ -12,6 +12,7 @@
  * Registro: https://www.viator.com/partner
  */
 import type { IAffiliateRepository } from '../../core/ports/IAffiliateRepository';
+import type { IConfigRepository } from '../../core/ports/IConfigRepository';
 import type { AffiliateLink, AffiliateProvider, DestinationSlug } from '../../core/domain/models';
 import { fetchViatorProducts } from '../../lib/affiliateFetch';
 
@@ -159,16 +160,17 @@ export class ViatorAdapter implements IAffiliateRepository {
   ) {}
 
   /**
-   * Async factory. When VIATOR_API_KEY and VIATOR_PARTNER_ID are set, fetches
-   * real product data from the Viator Partner API at build time.
-   * Falls back to hardcoded curated products when keys are absent.
+   * Async factory. Reads VIATOR_PARTNER_ID (required) and VIATOR_API_KEY (optional)
+   * from the config repository.
+   * Returns null when partner ID is not configured — Viator links are skipped entirely.
+   * When the API key is also present, fetches real product data at build time.
    */
-  static async create(): Promise<ViatorAdapter> {
-    const apiKey = import.meta.env.VIATOR_API_KEY as string | undefined;
-    const partnerId =
-      (import.meta.env.VIATOR_PARTNER_ID as string | undefined) ?? 'YOUR_VIATOR_PID';
+  static async create(config: IConfigRepository): Promise<ViatorAdapter | null> {
+    const partnerId = await config.get('viator_partner_id');
+    if (!partnerId) return null;
 
-    if (apiKey && partnerId !== 'YOUR_VIATOR_PID') {
+    const apiKey = await config.get('viator_api_key');
+    if (apiKey) {
       const cartagenaLinks = await fetchViatorProducts(
         apiKey,
         VIATOR_DESTINATION_IDS.cartagena!,

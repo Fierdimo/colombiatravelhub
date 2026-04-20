@@ -8,6 +8,7 @@
  * Registro: https://www.civitatis.com/es/afiliados/
  */
 import type { IAffiliateRepository } from '../../core/ports/IAffiliateRepository';
+import type { IConfigRepository } from '../../core/ports/IConfigRepository';
 import type { AffiliateLink, AffiliateProvider, DestinationSlug } from '../../core/domain/models';
 
 // Real verified Civitatis product URLs for Cartagena de Indias, Colombia
@@ -130,11 +131,12 @@ export class CivitatisAdapter implements IAffiliateRepository {
   ) {}
 
   /**
-   * Async factory (sync internally — Civitatis has no public affiliate API).
-   * Reads CIVITATIS_AID from the environment and injects it into all affiliate URLs.
+   * Async factory. Reads CIVITATIS_AID from the config repository.
+   * Returns null when the AID is not configured — Civitatis links are skipped entirely.
    */
-  static async create(): Promise<CivitatisAdapter> {
-    const aid = (import.meta.env.CIVITATIS_AID as string | undefined) ?? 'YOUR_CIVITATIS_AID';
+  static async create(config: IConfigRepository): Promise<CivitatisAdapter | null> {
+    const aid = await config.get('civitatis_aid');
+    if (!aid) return null;
     const links = buildFallbackLinks(aid);
     const featured = Object.values(links).filter((l) => l.featured);
     return new CivitatisAdapter(links, { cartagena: featured });

@@ -1,6 +1,7 @@
 ---
 import type { AffiliateLink, Locale } from '../core/domain/models';
 import { useTranslations } from '../i18n';
+import { localizeAffiliateUrl } from '../lib/localizeAffiliateUrl';
 
 interface Props {
   link: AffiliateLink;
@@ -11,6 +12,7 @@ interface Props {
 
 const { link, locale, variant = 'primary', class: className = '' } = Astro.props;
 const t = useTranslations(locale);
+const bookingUrl = localizeAffiliateUrl(link.url, locale);
 
 const baseClasses =
   'inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-body font-bold text-base transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2';
@@ -30,7 +32,7 @@ const label = providerLabel[link.provider] ?? t('article.bookNow');
 ---
 
 <a
-  href={link.url}
+  href={bookingUrl}
   target="_blank"
   rel="noopener noreferrer sponsored"
   class={`${baseClasses} ${variantClasses} ${className}`}

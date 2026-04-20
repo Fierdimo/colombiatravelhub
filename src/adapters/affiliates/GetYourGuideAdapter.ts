@@ -8,6 +8,7 @@
  * Registro: https://affiliate.getyourguide.com
  */
 import type { IAffiliateRepository } from '../../core/ports/IAffiliateRepository';
+import type { IConfigRepository } from '../../core/ports/IConfigRepository';
 import type { AffiliateLink, AffiliateProvider, DestinationSlug } from '../../core/domain/models';
 
 // Real verified GYG product URLs for Cartagena, Colombia (location: cartagena-l362)
@@ -117,14 +118,14 @@ export class GetYourGuideAdapter implements IAffiliateRepository {
   ) {}
 
   /**
-   * Async factory. Injects GYG_PARTNER_ID into affiliate URLs.
+   * Async factory. Reads GYG_PARTNER_ID from the config repository.
+   * Returns null when the partner ID is not configured — GYG links are skipped entirely.
    * Note: GYG's activities search API requires Technology Partner status.
    * Live products are shown via the GYGWidget.astro component instead.
-   * The product cards here serve as curated affiliate links in article pages.
    */
-  static async create(): Promise<GetYourGuideAdapter> {
-    const partnerId =
-      (import.meta.env.GYG_PARTNER_ID as string | undefined) ?? 'YOUR_GYG_PARTNER_ID';
+  static async create(config: IConfigRepository): Promise<GetYourGuideAdapter | null> {
+    const partnerId = await config.get('gyg_partner_id');
+    if (!partnerId) return null;
 
     const fallback = buildFallbackLinks(partnerId);
     const featured = Object.values(fallback).filter((l) => l.featured);
