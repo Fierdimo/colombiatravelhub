@@ -20,6 +20,14 @@ export class AffiliateService {
   }
 
   /**
+   * Returns all products for a destination across all providers.
+   * Used by category pages to show the full catalog.
+   */
+  getAllLinksForDestination(destination: DestinationSlug): AffiliateLink[] {
+    return this.repos.flatMap((repo) => repo.getAllLinks(destination));
+  }
+
+  /**
    * Returns all featured products for a destination across all providers.
    * When API keys are configured, these are real-time products from the platforms.
    * Falls back to curated hardcoded products otherwise.

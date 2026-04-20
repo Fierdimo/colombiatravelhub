@@ -64,14 +64,14 @@ function buildFallbackLinks(partnerId: string): Record<string, AffiliateLink> {
       label: 'Crucero al Atardecer en Cartagena',
       description:
         'Navega la bahía de Cartagena al atardecer en un barco fiesta. Bebidas incluidas, música y las mejores vistas del skyline colonial desde el agua.',
-      imageUrl: '/images/tours/tours-cartagena.svg',
+      imageUrl: 'https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=395,height=400/tour_img/ad9f03d558c6199cc67eb4e2e0648a941bf2a2d0d7edf688ce3884736a97e360.jpeg',
       priceFrom: 22,
       currency: 'USD',
       rating: 4.5,
       reviewCount: 480,
       duration: '2 horas',
       badge: 'bestPrice',
-      featured: false,
+      featured: true,
     },
     'gyg-cartagena-playa-blanca': {
       id: 'gyg-cartagena-playa-blanca',
@@ -81,14 +81,14 @@ function buildFallbackLinks(partnerId: string): Record<string, AffiliateLink> {
       label: 'Playa Blanca Barú: Excursión con Almuerzo',
       description:
         'Visita la playa más espectacular del Caribe colombiano. Arena blanca, aguas turquesas, almuerzo y transporte desde tu hotel incluidos.',
-      imageUrl: '/images/playas/playa-blanca-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-playa-blanca-589x392.jpg',
       priceFrom: 42,
       currency: 'USD',
       rating: 4.7,
       reviewCount: 920,
       duration: '8 horas',
       badge: 'bestPrice',
-      featured: false,
+      featured: true,
     },
     // Keep old IDs as aliases pointing to real products (backward compat)
     'gyg-cartagena-walking-tour-old': {
@@ -98,7 +98,7 @@ function buildFallbackLinks(partnerId: string): Record<string, AffiliateLink> {
       label: 'Islas del Rosario: 5 Lugares Imperdibles con Almuerzo',
       description:
         'Los 5 rincones más espectaculares de las Islas del Rosario en una sola excursión. Incluye almuerzo típico y snorkel.',
-      imageUrl: '/images/playas/mejores-playas-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-islas-rosario-589x392.jpg',
       priceFrom: 55,
       currency: 'USD',
       rating: 4.8,
@@ -145,5 +145,10 @@ export class GetYourGuideAdapter implements IAffiliateRepository {
 
   getFeaturedLinks(destination: DestinationSlug): AffiliateLink[] {
     return this.featuredByDestination[destination] ?? [];
+  }
+
+  getAllLinks(destination: DestinationSlug): AffiliateLink[] {
+    if (destination !== 'cartagena') return [];
+    return Object.values(this.links);
   }
 }

@@ -156,4 +156,10 @@ export class CivitatisAdapter implements IAffiliateRepository {
   getFeaturedLinks(destination: DestinationSlug): AffiliateLink[] {
     return this.featuredByDestination[destination] ?? [];
   }
+
+  getAllLinks(destination: DestinationSlug): AffiliateLink[] {
+    // All curated links in this adapter are for Cartagena; extend when adding destinations.
+    if (destination !== 'cartagena') return [];
+    return Object.values(this.links);
+  }
 }

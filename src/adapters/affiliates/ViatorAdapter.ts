@@ -45,7 +45,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Walking Tour Ciudad Amurallada de Cartagena',
       description:
         'Explora el corazón colonial de Cartagena con un guía experto. Murallas, Torre del Reloj, Getsemaní y palacetes de colores en 3 horas.',
-      imageUrl: '/images/tours/tours-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/tour-cartagena-completo-589x392.jpg',
       priceFrom: 22,
       currency: 'USD',
       rating: 4.8,
@@ -61,7 +61,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Excursión a las Islas del Rosario',
       description:
         'Lancha rápida desde el Muelle de los Pegasos. Snorkel, playa paradisíaca y almuerzo incluido. El Caribe en su máxima expresión.',
-      imageUrl: '/images/playas/mejores-playas-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-islas-rosario-589x392.jpg',
       priceFrom: 45,
       currency: 'USD',
       rating: 4.7,
@@ -77,7 +77,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Velero al Atardecer en la Bahía',
       description:
         'Navega la Bahía de Cartagena mientras el sol se pone sobre las murallas coloniales. Bebidas incluidas.',
-      imageUrl: '/images/tours/tours-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/paseo-barco-pirata-atardecer-589x392.jpg',
       priceFrom: 48,
       currency: 'USD',
       rating: 4.9,
@@ -93,7 +93,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Excursión al Parque Nacional Tayrona',
       description:
         'Un día completo en el Parque Nacional Tayrona. Selva tropical, playas vírgenes y avistamiento de vida silvestre.',
-      imageUrl: '/images/playas/mejores-playas-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/excursion-playa-blanca-589x392.jpg',
       priceFrom: 85,
       currency: 'USD',
       rating: 4.6,
@@ -108,7 +108,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Tour Gastronómico por Cartagena',
       description:
         'Prueba los sabores auténticos del Caribe colombiano: arepas de huevo, carimañolas, ceviche costeño y más en mercados locales.',
-      imageUrl: '/images/gastronomia/donde-comer-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/tour-rumba-cartagena-589x392.jpg',
       priceFrom: 35,
       currency: 'USD',
       rating: 4.9,
@@ -124,7 +124,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Noche en Getsemaní: Arte Urbano y Cultura',
       description:
         'El barrio más trendy de Cartagena cobra vida de noche. Murales, música en vivo, coctelería artesanal.',
-      imageUrl: '/images/tours/tours-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/free-tour-cartagena-indias-589x392.jpg',
       priceFrom: 25,
       currency: 'USD',
       rating: 4.8,
@@ -140,7 +140,7 @@ function buildFallbackLinks(pid: string): Record<string, AffiliateLink> {
       label: 'Castillo San Felipe de Barajas: Tour Guiado',
       description:
         'Explora la fortaleza más poderosa jamás construida por España en América. Túneles secretos, cañones y vistas panorámicas.',
-      imageUrl: '/images/tours/tours-cartagena.svg',
+      imageUrl: 'https://www.civitatis.com/f/colombia/cartagena-de-indias/tour-cartagena-completo-589x392.jpg',
       priceFrom: 28,
       currency: 'USD',
       rating: 4.7,
@@ -204,5 +204,10 @@ export class ViatorAdapter implements IAffiliateRepository {
 
   getFeaturedLinks(destination: DestinationSlug): AffiliateLink[] {
     return this.featuredByDestination[destination] ?? [];
+  }
+
+  getAllLinks(destination: DestinationSlug): AffiliateLink[] {
+    if (destination !== 'cartagena') return [];
+    return Object.values(this.links);
   }
 }

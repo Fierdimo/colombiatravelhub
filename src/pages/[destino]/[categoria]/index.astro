@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
+import ProductCard from '../../../components/ProductCard.astro';
 import CategoryNav from '../../../components/CategoryNav.astro';
 import { useTranslations } from '../../../i18n';
-import { contentService, seoService } from '../../../lib/services';
+import { contentService, seoService, getAffiliateService } from '../../../lib/services';
 import type { CategorySlug, DestinationSlug } from '../../../core/domain/models';
 import { CATEGORIES } from '../../../data/categories';
 import { ACTIVE_DESTINATIONS } from '../../../data/destinations';
@@ -40,6 +41,14 @@ const articles = await contentService.getArticlesByCategory(
   locale,
 );
 
+// Affiliate products — shown on tours and playas categories
+const AFFILIATE_CATEGORIES: CategorySlug[] = ['tours', 'playas'];
+const affiliateService = await getAffiliateService();
+const affiliateProducts =
+  AFFILIATE_CATEGORIES.includes(categorySlug as CategorySlug)
+    ? affiliateService.getAllLinksForDestination(destination.slug as DestinationSlug)
+    : [];
+
 const destName = destination.names[locale] ?? destination.names['es'] ?? destination.slug;
 const catLabel = t(`category.${categorySlug}`);
 const pageTitle = `${catLabel} en ${destName} — Colombia Travel Hub`;
@@ -75,11 +84,36 @@ const path = `/${destination.slug}/${categorySlug}`;
       activeCategory={categorySlug as CategorySlug}
     />
 
-    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {articles.length > 0
-        ? articles.map((article) => <ArticleCard article={article} locale={locale} />)
-        : <p class="text-muted col-span-full text-center py-12">{t('article.noArticles')}</p>
-      }
-    </div>
+    <!-- Affiliate products (tours & playas categories) -->
+    {affiliateProducts.length > 0 && (
+      <div class="mt-10">
+        <h2 class="font-display text-2xl font-bold text-ink mb-6">
+          Reserva tu experiencia
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {affiliateProducts.map((link) => (
+            <ProductCard link={link} locale={locale} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Editorial articles -->
+    {articles.length > 0 && (
+      <div class={affiliateProducts.length > 0 ? 'mt-16' : 'mt-10'}>
+        {affiliateProducts.length > 0 && (
+          <h2 class="font-display text-2xl font-bold text-ink mb-6">
+            Guías y artículos
+          </h2>
+        )}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((article) => <ArticleCard article={article} locale={locale} />)}
+        </div>
+      </div>
+    )}
+
+    {affiliateProducts.length === 0 && articles.length === 0 && (
+      <p class="mt-10 text-muted col-span-full text-center py-12">{t('article.noArticles')}</p>
+    )}
   </div>
 </BaseLayout>
